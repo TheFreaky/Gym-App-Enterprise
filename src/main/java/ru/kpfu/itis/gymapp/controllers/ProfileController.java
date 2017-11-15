@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kpfu.itis.gymapp.dto.UserProfileDto;
@@ -33,7 +32,7 @@ public class ProfileController {
     private AuthenticationService authService;
 
     @GetMapping
-    public String getProfilePage(@ModelAttribute("model") ModelMap model, Authentication auth) {
+    public String getProfilePage(ModelMap model, Authentication auth) {
         User user = authService.getUserByAuthentication(auth);
         UserProfileDto userProfile = userProfileService.getUserProfile(user.getId());
         model.addAttribute("userProfile", userProfile);
@@ -41,7 +40,7 @@ public class ProfileController {
     }
 
     @PostMapping
-    public String editProfile(@ModelAttribute("model") ModelMap model, @Valid UserProfileForm form,
+    public String editProfile(ModelMap model, @Valid UserProfileForm form,
                               BindingResult errors, Authentication auth) {
         if (errors.hasErrors()) {
             model.addAttribute("profile", form);
@@ -50,7 +49,7 @@ public class ProfileController {
         } else {
             User user = authService.getUserByAuthentication(auth);
             userProfileService.editUserProfile(form, user);
-            return "redirect:/setting";
+            return "redirect:/profile";
         }
     }
 

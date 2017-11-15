@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
 import ru.kpfu.itis.gymapp.forms.UserSettingForm;
 import ru.kpfu.itis.gymapp.models.User;
+import ru.kpfu.itis.gymapp.models.enums.Role;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 
 /**
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
                 .name(userForm.getName())
                 .login(userForm.getLogin())
                 .password(hashPassword)
+                .role(Role.USER)
                 .build();
         userRepository.save(user);
     }

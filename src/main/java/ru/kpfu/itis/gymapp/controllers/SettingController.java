@@ -43,7 +43,7 @@ public class SettingController {
     }
 
     @PostMapping
-    public String editSetting(@ModelAttribute("model") ModelMap model,
+    public String editSetting(ModelMap model,
                               @Valid @ModelAttribute("settingForm") UserSettingForm form,
                               BindingResult errors, Authentication auth) {
 
@@ -53,6 +53,7 @@ public class SettingController {
             return "setting";
         } else {
 
+            userService.editUserData(form, authService.getUserByAuthentication(auth));
             userService.editUserData(form, authService.getUserByAuthentication(auth));
             return "redirect:/setting";
         }

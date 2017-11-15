@@ -40,7 +40,7 @@ public class SignUpController {
 
     @PostMapping
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm user,
-                         BindingResult errors, @ModelAttribute("model") ModelMap model) {
+                         BindingResult errors, ModelMap model) {
         if (errors.hasErrors()) {
             model.addAttribute("user", user);
             model.addAttribute("signupErrors", errors.getAllErrors());

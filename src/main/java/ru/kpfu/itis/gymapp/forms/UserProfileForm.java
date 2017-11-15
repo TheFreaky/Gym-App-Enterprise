@@ -1,7 +1,9 @@
 package ru.kpfu.itis.gymapp.forms;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserProfileForm {
     @NotNull(message = "Пустое имя")
     @NotEmpty(message = "Пустое имя")
