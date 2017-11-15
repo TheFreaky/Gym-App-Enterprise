@@ -2,6 +2,7 @@ package ru.kpfu.itis.gymapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.gymapp.forms.UserProfileForm;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
 import ru.kpfu.itis.gymapp.dto.UserProfileDto;
@@ -44,7 +45,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         int flexibilityProgress = user.getFlexibility() % 100;
 
 
-
         return UserProfileDto
                 .builder()
                 .id(user.getId())
@@ -69,15 +69,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileDto editUserProfile(UserProfileDto profile) {
-        User model = User.builder()
-                .id(profile.getId())
-                .name(profile.getName())
-                .weight(profile.getWeight())
-                .height(profile.getHeight())
-                .gender(profile.getGender())
-                .build();
-        userRepository.save(model);
-        return profile;
+    public void editUserProfile(UserProfileForm form, User user) {
+        user = userRepository.findOne(user.getId());
+        user.setName(form.getName());
+        user.setWeight(form.getWeight());
+        user.setHeight(form.getHeight());
+        user.setGender(form.getGender());
+        userRepository.save(user);
     }
 }

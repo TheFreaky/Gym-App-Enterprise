@@ -9,6 +9,12 @@ import ru.kpfu.itis.gymapp.models.UserTraining;
 
 import java.util.List;
 
+/**
+ * 25.09.2017
+ *
+ * @author Kuznetsov Maxim
+ * @version v1.0
+ */
 @Data
 @Builder
 @NoArgsConstructor

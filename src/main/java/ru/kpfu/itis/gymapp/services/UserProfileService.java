@@ -2,6 +2,8 @@ package ru.kpfu.itis.gymapp.services;
 
 
 import ru.kpfu.itis.gymapp.dto.UserProfileDto;
+import ru.kpfu.itis.gymapp.forms.UserProfileForm;
+import ru.kpfu.itis.gymapp.models.User;
 
 /**
  * 07.11.2017
@@ -12,5 +14,5 @@ import ru.kpfu.itis.gymapp.dto.UserProfileDto;
 public interface UserProfileService {
     UserProfileDto getUserProfile(Long id);
 
-    UserProfileDto editUserProfile(UserProfileDto profile);
+    void editUserProfile(UserProfileForm form, User user);
 }

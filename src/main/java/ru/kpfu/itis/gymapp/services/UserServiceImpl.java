@@ -1,10 +1,10 @@
 package ru.kpfu.itis.gymapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
+import ru.kpfu.itis.gymapp.forms.UserSettingForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 
@@ -15,7 +15,7 @@ import ru.kpfu.itis.gymapp.repositories.UserRepository;
  * @version v1.0
  */
 @Service
-public class SignUpServiceImpl implements SignUpService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -30,6 +30,15 @@ public class SignUpServiceImpl implements SignUpService {
                 .login(userForm.getLogin())
                 .password(hashPassword)
                 .build();
+        userRepository.save(user);
+    }
+
+    @Override
+    public void editUserData(UserSettingForm form, User user) {
+        user = userRepository.findOne(user.getId());
+        String hashPassword = passwordEncoder.encode(form.getPassword());
+        user.setLogin(form.getLogin().toLowerCase());
+        user.setPassword(hashPassword);
         userRepository.save(user);
     }
 }

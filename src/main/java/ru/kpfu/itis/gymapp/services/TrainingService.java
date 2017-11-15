@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gymapp.services;
 
 
+import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
 import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.dto.UserDto;
 import ru.kpfu.itis.gymapp.models.Training;
@@ -15,11 +16,11 @@ import java.util.List;
  * @version v1.0
  */
 public interface TrainingService {
-    List<TrainingDto> getTrainings(UserDto user);
+    List<TrainingDto> getTrainings(User user);
 
-    List<TrainingDto> getTrainingsSortedByType(UserDto user);
-
-    List<TrainingDto> getTrainingsSortedByComplexity(UserDto user);
+    List<TrainingDto> getTrainingsSortedBy(String sortType, User user);
 
     Training getTraining(String name, User user);
+
+    void addUserTraining(User user, CompleteTrainingDto trainingDto);
 }

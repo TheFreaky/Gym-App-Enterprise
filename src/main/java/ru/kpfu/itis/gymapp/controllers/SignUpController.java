@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import ru.kpfu.itis.gymapp.dto.UserDto;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
-import ru.kpfu.itis.gymapp.services.SignUpService;
+import ru.kpfu.itis.gymapp.services.UserService;
 import ru.kpfu.itis.gymapp.validators.UserRegistrationFormValidator;
 
 import javax.validation.Valid;
@@ -24,7 +22,7 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 public class SignUpController {
     @Autowired
-    private SignUpService service;
+    private UserService service;
 
     @Autowired
     private UserRegistrationFormValidator userRegistrationFormValidator;
@@ -45,7 +43,7 @@ public class SignUpController {
                          BindingResult errors, @ModelAttribute("model") ModelMap model) {
         if (errors.hasErrors()) {
             model.addAttribute("user", user);
-            model.addAttribute("signupErrors", "Invalid email");
+            model.addAttribute("signupErrors", errors.getAllErrors());
             return "welcome";
         } else {
             service.register(user);

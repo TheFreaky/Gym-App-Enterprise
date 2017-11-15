@@ -3,13 +3,17 @@ package ru.kpfu.itis.gymapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.models.UserTraining;
 import ru.kpfu.itis.gymapp.repositories.TrainingRepository;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.dto.UserDto;
 import ru.kpfu.itis.gymapp.models.Training;
 import ru.kpfu.itis.gymapp.models.User;
+import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,37 +32,56 @@ public class TrainingServiceImpl implements TrainingService {
     private TrainingRepository trainingRepository;
     @Autowired
     private UserLevelService userLevelService;
+    @Autowired
+    private UserTrainingRepository userTrainingRepository;
 
     @Override
-    public List<TrainingDto> getTrainings(UserDto user) {
+    public List<TrainingDto> getTrainings(User user) {
         return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThan);
     }
 
     @Override
-    public List<TrainingDto> getTrainingsSortedByType(UserDto user) {
-        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByType);
+    public List<TrainingDto> getTrainingsSortedBy(String sortType, User user) {
+        if ("type".equals(sortType)) {
+            return getTrainingsSortedByType(user);
+        } else if ("complexity".equals(sortType)) {
+            return getTrainingsSortedByComplexity(user);
+        }
+        return null;
     }
 
     @Override
-    public List<TrainingDto> getTrainingsSortedByComplexity(UserDto user) {
-        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByComplexity);
-    }
-
-    @Override
-    public Training getTraining(String name, User userDto) {
+    public Training getTraining(String name, User user) {
         Training training = trainingRepository.findByName(name);
         if (training == null) {
             return null;
         }
 
-        User user = userRepository.findOne(userDto.getId());
         if (training.getMinLvl() > userLevelService.getLvl(user.getXp())) {
             training = null;
         }
         return training;
     }
 
-    private List<TrainingDto> trainingToTrainingDto (UserDto user, Function<Integer, List<Training>> function) {
+    @Override
+    public void addUserTraining(User user, CompleteTrainingDto trainingDto) {
+        Training training = trainingRepository.findByName(trainingDto.getName());
+
+        Integer doneEx = trainingDto.getExercises().length;
+        Long xp = training.getXp() * doneEx / training.getExercises().size();
+
+        userRepository.updateXp(user.getId(), xp);
+        userTrainingRepository.save(
+                UserTraining.builder()
+                        .date(LocalDate.now())
+                        .user(user)
+                        .training(training)
+                        .build()
+        );
+    }
+
+
+    private List<TrainingDto> trainingToTrainingDto (User user, Function<Integer, List<Training>> function) {
         Integer lvl = userLevelService.getLvl(userRepository.findOne(user.getId()).getXp());
         return function.apply(lvl).stream()
                 .map(training -> TrainingDto.builder()
@@ -67,5 +90,13 @@ public class TrainingServiceImpl implements TrainingService {
                         .type(training.getType())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    private List<TrainingDto> getTrainingsSortedByType(User user) {
+        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByType);
+    }
+
+    private List<TrainingDto> getTrainingsSortedByComplexity(User user) {
+        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByComplexity);
     }
 }
