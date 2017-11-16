@@ -32,16 +32,17 @@ public class UserRegistrationFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserRegistrationForm form = (UserRegistrationForm)target;
 
-        userRepository.findByLogin(form.getLogin()).ifPresent(user -> errors.reject("bad.login", "Email занят"));
+        userRepository.findByLogin(form.getLogin()).ifPresent(user -> errors.reject("bad.login"));
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "empty.login", "Пустой email");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "empty.password", "Пустой пароль");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "empty.login");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "empty.name");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "empty.password");
 
         String regex = ".+@.+\\.[a-z]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(form.getLogin());
         if (!matcher.matches()) {
-            errors.reject("bad.login", "Неверный email");
+            errors.reject("bad.email");
         }
 
     }

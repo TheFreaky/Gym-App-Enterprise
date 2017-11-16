@@ -140,7 +140,7 @@
                             <div class="inner-form">
                             <#if signupErrors??>
                                 <#list signupErrors as signupError>
-                                    <div class="text-danger">* ${signupError.defaultMessage}</div>
+                                    <div class="text-danger">* <@spring.message "${signupError.code}"/></div>
                                 </#list>
                             </#if>
                                 <form class="sign-form" method="post" action="<@spring.url "/signup"/>">
