@@ -7,5 +7,5 @@ package ru.kpfu.itis.gymapp.models.enums;
  * @version v1.0
  */
 public enum Complexity {
-    Beginner, Medium, Advanced
+    BEGINNER, MEDIUM, ADVANCED
 }

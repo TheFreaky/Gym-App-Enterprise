@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * 26.10.2017
@@ -25,7 +25,7 @@ public class UserTraining {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    private Date date;
 
     @ManyToOne
     @PrimaryKeyJoinColumn(name="user_id", referencedColumnName="id")

@@ -1,12 +1,10 @@
 package ru.kpfu.itis.gymapp.models;
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import ru.kpfu.itis.gymapp.models.enums.Complexity;
 import ru.kpfu.itis.gymapp.models.enums.Specialization;
 
@@ -25,10 +23,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "trainings")
-@TypeDef(
-        name = "complexity",
-        typeClass = PostgreSQLEnumType.class
-)
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +32,10 @@ public class Training {
     private String description;
     private Long xp;
     private Integer minLvl;
+
     @Enumerated(EnumType.STRING)
-    @Type(type = "complexity")
     private Complexity complexity;
+
     @Enumerated(EnumType.STRING)
     @Type(type = "specialization")
     private Specialization type;

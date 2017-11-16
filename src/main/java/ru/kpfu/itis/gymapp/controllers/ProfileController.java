@@ -43,7 +43,6 @@ public class ProfileController {
     public String editProfile(ModelMap model, @Valid UserProfileForm form,
                               BindingResult errors, Authentication auth) {
         if (errors.hasErrors()) {
-            model.addAttribute("profile", form);
             model.addAttribute("profileErrors", errors.getAllErrors());
             return "profile";
         } else {

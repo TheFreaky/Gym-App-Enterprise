@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.kpfu.itis.gymapp.models.enums.Specialization;
 import ru.kpfu.itis.gymapp.models.UserTraining;
+import ru.kpfu.itis.gymapp.models.enums.Specialization;
 
 import java.util.List;
 
@@ -29,13 +29,13 @@ public class UserProfileDto {
     private Integer lvl;
     private Long xp;
     private Long xpToLvlUp;
-    private Byte progress;
-    private Short strengthLvl;
-    private Short strengthProgress;
-    private Short staminaLvl;
-    private Short staminaProgress;
-    private Short flexibilityLvl;
-    private Short flexibilityProgress;
+    private Integer progress;
+    private Integer strengthLvl;
+    private Integer strengthProgress;
+    private Integer staminaLvl;
+    private Integer staminaProgress;
+    private Integer flexibilityLvl;
+    private Integer flexibilityProgress;
     private Boolean gender;
     private List<UserTraining> userTrainings;
 }

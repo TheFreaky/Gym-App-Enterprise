@@ -4,16 +4,15 @@ package ru.kpfu.itis.gymapp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.dto.TrainingDto;
+import ru.kpfu.itis.gymapp.models.Training;
+import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.UserTraining;
 import ru.kpfu.itis.gymapp.repositories.TrainingRepository;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
-import ru.kpfu.itis.gymapp.dto.TrainingDto;
-import ru.kpfu.itis.gymapp.dto.UserDto;
-import ru.kpfu.itis.gymapp.models.Training;
-import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -73,7 +72,7 @@ public class TrainingServiceImpl implements TrainingService {
         userRepository.updateXp(user.getId(), xp);
         userTrainingRepository.save(
                 UserTraining.builder()
-                        .date(LocalDate.now())
+                        .date(new Date())
                         .user(user)
                         .training(training)
                         .build()

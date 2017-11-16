@@ -19,16 +19,16 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserProfileForm {
-    @NotNull(message = "Пустое имя")
-    @NotEmpty(message = "Пустое имя")
+    @NotNull(message = "{empty.name}")
+    @NotEmpty(message = "{empty.name}")
     private String name;
 
-    @NotNull(message = "Пустой пол")
+    @NotNull(message = "{empty.gender}")
     private Boolean gender;
 
-    @NotNull(message = "Пустой вес")
+    @NotNull(message = "{empty.weight}")
     private Float weight;
 
-    @NotNull(message = "Пустой рост")
+    @NotNull(message = "{empty.height}")
     private Short height;
 }

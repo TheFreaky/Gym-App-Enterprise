@@ -49,7 +49,7 @@ public class SettingController {
 
         if (errors.hasErrors()) {
             model.addAttribute("setting", form);
-            model.addAttribute("settingErrors", errors.getAllErrors());
+            model.addAttribute("errors", errors.getAllErrors());
             return "setting";
         } else {
 

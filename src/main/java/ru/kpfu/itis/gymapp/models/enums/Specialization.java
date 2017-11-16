@@ -7,5 +7,5 @@ package ru.kpfu.itis.gymapp.models.enums;
  * @version v1.0
  */
 public enum Specialization {
-    Agility, Strength, Flexibility, Common
+    STAMINA, STRENGTH, FLEXIBILITY, COMMON
 }

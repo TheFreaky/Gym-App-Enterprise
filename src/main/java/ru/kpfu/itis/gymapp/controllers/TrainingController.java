@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
 import ru.kpfu.itis.gymapp.services.TrainingService;
+
+import java.util.List;
 
 
 /**
@@ -21,7 +24,7 @@ import ru.kpfu.itis.gymapp.services.TrainingService;
  * @version v1.0
  */
 @Controller
-@RequestMapping("/training")
+@RequestMapping
 public class TrainingController {
     @Autowired
     private TrainingService trainingService;
@@ -29,7 +32,7 @@ public class TrainingController {
     @Autowired
     private AuthenticationService authService;
 
-    @GetMapping
+    @GetMapping("/training")
     public String getTrainingPage(ModelMap model,
                                   @RequestParam("name") String name, Authentication authentication) {
         User user = authService.getUserByAuthentication(authentication);
@@ -37,11 +40,26 @@ public class TrainingController {
         return "training";
     }
 
-    @PostMapping
+    @PostMapping("/training")
     public String addTraining(CompleteTrainingDto trainingDto, Authentication authentication) {
         User user = authService.getUserByAuthentication(authentication);
         trainingService.addUserTraining(user, trainingDto);
         return "redirect:/trainings";
+    }
+
+    @GetMapping("/trainings")
+    public String getTrainingsPage(ModelMap model,
+                                   @RequestParam(name = "how", required = false) String how, Authentication auth) {
+        User user = authService.getUserByAuthentication(auth);
+        List<TrainingDto> trainingDtos;
+        if (how == null) {
+            trainingDtos = trainingService.getTrainings(user);
+        } else {
+            trainingDtos = trainingService.getTrainingsSortedBy(how, user);
+        }
+
+        model.addAttribute("trainings", trainingDtos);
+        return "trainings";
     }
 
 }
