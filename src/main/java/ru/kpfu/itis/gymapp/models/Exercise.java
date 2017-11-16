@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import ru.kpfu.itis.gymapp.models.enums.Specialization;
 
 import javax.persistence.*;
 
@@ -19,9 +21,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "exercises")
-public class Exercise {
+public class Exercise  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Type(type = "specialization")
+    private Specialization type;
 }

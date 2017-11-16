@@ -7,6 +7,7 @@ import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
 import ru.kpfu.itis.gymapp.forms.UserSettingForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.enums.Role;
+import ru.kpfu.itis.gymapp.models.enums.Specialization;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 
 /**
@@ -30,6 +31,13 @@ public class UserServiceImpl implements UserService {
                 .name(userForm.getName())
                 .login(userForm.getLogin())
                 .password(hashPassword)
+                .height((short) 0)
+                .weight((float) 0)
+                .xp(0L)
+                .flexibility((short) 0)
+                .stamina((short) 0)
+                .strength((short) 0)
+                .specialization(Specialization.COMMON)
                 .role(Role.USER)
                 .build();
         userRepository.save(user);

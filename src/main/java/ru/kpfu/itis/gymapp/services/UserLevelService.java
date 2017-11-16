@@ -1,5 +1,7 @@
 package ru.kpfu.itis.gymapp.services;
 
+import ru.kpfu.itis.gymapp.dto.XpDetailsDto;
+
 /**
  * 15.11.2017
  *
@@ -8,5 +10,10 @@ package ru.kpfu.itis.gymapp.services;
  */
 public interface UserLevelService {
     Integer getLvl(Long xp);
+
     Long getXpForLvl(Integer lvl);
+
+    XpDetailsDto getXpDetails(Long xp);
+
+    XpDetailsDto getSkillsXpDetails(Short xp);
 }

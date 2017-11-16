@@ -3,7 +3,6 @@ package ru.kpfu.itis.gymapp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.kpfu.itis.gymapp.models.Training;
 import ru.kpfu.itis.gymapp.models.UserTraining;
 
 import java.util.List;

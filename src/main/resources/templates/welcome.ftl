@@ -1,7 +1,7 @@
 <#ftl encoding='UTF-8'>
 <#import "spring.ftl" as spring />
+<#-- @ftlvariable name="userForm" type="ru.kpfu.itis.gymapp.forms.UserRegistrationForm" -->
 <#-- @ftlvariable name="signinErrors" type="java.lang.String" -->
-<#-- @ftlvariable name="signupErrors" type="java.util.List<org.springframework.validation.ObjectError>" -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,7 @@
         <#if signinErrors??>
             $('#myModal').modal('show');
         </#if>
-        <#if signupErrors??>
+        <#if errors??>
             $('#myModal').modal('show');
             $('li > a[href="#signup"]').tab("show");
         </#if>
@@ -138,26 +138,27 @@
                         </div>
                         <div id="signup" class="tab-pane" role="tabpanel">
                             <div class="inner-form">
-                            <#if signupErrors??>
-                                <#list signupErrors as signupError>
-                                    <div class="text-danger">* <@spring.message "${signupError.code}"/></div>
+                            <#if errors??>
+                                <#list errors as error>
+                                    <div class="text-danger">* <@spring.message "${error.code}"/></div>
                                 </#list>
                             </#if>
                                 <form class="sign-form" method="post" action="<@spring.url "/signup"/>">
                                     <label for="signup-name">Имя:</label>
                                     <input id="signup-name" type="text" name="name"
-                                    <#if user??>
-                                           value="${user.name}"
+                                    <#if userForm??>
+                                           value="${userForm.name}"
                                     </#if>
                                     >
                                     <label for="signup-username">Email:</label>
                                     <input id="signup-username" type="text" name="login"
-                                    <#if user??>
-                                           value="${user.login}"
+                                    <#if userForm??>
+                                           value="${userForm.login}"
                                     </#if>
                                     >
                                     <label for="signup-password">Пароль:</label>
                                     <input id="signup-password" type="password" name="password">
+
                                     <button type="submit">Зарегистрироваться</button>
                                 </form>
                             </div>
@@ -168,7 +169,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

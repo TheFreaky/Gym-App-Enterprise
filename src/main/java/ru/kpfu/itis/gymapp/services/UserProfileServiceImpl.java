@@ -2,12 +2,13 @@ package ru.kpfu.itis.gymapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.gymapp.forms.UserProfileForm;
-import ru.kpfu.itis.gymapp.repositories.UserRepository;
-import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
 import ru.kpfu.itis.gymapp.dto.UserProfileDto;
+import ru.kpfu.itis.gymapp.dto.XpDetailsDto;
+import ru.kpfu.itis.gymapp.forms.UserProfileForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.UserTraining;
+import ru.kpfu.itis.gymapp.repositories.UserRepository;
+import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
 
 import java.util.List;
 
@@ -32,18 +33,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         List<UserTraining> userTrainings = userTrainingRepository.findAllByUserId(id);
 
         Long xp = user.getXp();
-        Integer lvl = userLevelService.getLvl(xp);
-        Long xpToLvlUp = userLevelService.getXpForLvl(lvl + 1);
-        Long xpToCurrentLvl = userLevelService.getXpForLvl(lvl);
-        long progress = (xp - xpToCurrentLvl) * 100 / (xpToLvlUp - xpToCurrentLvl);
-
-        int strengthLvl = user.getStrength() / 100;
-        int strengthProgress = user.getStrength() % 100;
-        int staminaLvl = user.getStamina() / 100;
-        int staminaProgress = user.getStamina() % 100;
-        int flexibilityLvl = user.getFlexibility() / 100;
-        int flexibilityProgress = user.getFlexibility() % 100;
-
+        XpDetailsDto userXpDetails = userLevelService.getXpDetails(xp);
+        XpDetailsDto strengthDetails = userLevelService.getSkillsXpDetails(user.getStrength());
+        XpDetailsDto staminaDetails = userLevelService.getSkillsXpDetails(user.getStamina());
+        XpDetailsDto flexibilityDetails = userLevelService.getSkillsXpDetails(user.getFlexibility());
 
         return UserProfileDto
                 .builder()
@@ -54,15 +47,15 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .height(user.getHeight())
                 .specialization(user.getSpecialization())
                 .xp(xp)
-                .progress((byte) progress)
-                .lvl(lvl)
-                .xpToLvlUp(xpToLvlUp)
-                .strengthLvl((short) strengthLvl)
-                .strengthProgress((short) strengthProgress)
-                .staminaLvl((short) staminaLvl)
-                .staminaProgress((short) staminaProgress)
-                .flexibilityLvl((short) flexibilityLvl)
-                .flexibilityProgress((short) flexibilityProgress)
+                .progress(userXpDetails.getProgress())
+                .lvl(userXpDetails.getLvl())
+                .xpToLvlUp(userXpDetails.getXpToLvlUp())
+                .strengthLvl(strengthDetails.getLvl())
+                .strengthProgress(strengthDetails.getProgress())
+                .staminaLvl(staminaDetails.getLvl())
+                .staminaProgress(staminaDetails.getProgress())
+                .flexibilityLvl(flexibilityDetails.getLvl())
+                .flexibilityProgress(flexibilityDetails.getProgress())
                 .gender(user.getGender())
                 .userTrainings(userTrainings)
                 .build();
