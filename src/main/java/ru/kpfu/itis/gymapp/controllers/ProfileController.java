@@ -5,14 +5,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.gymapp.dto.UserProfileDto;
 import ru.kpfu.itis.gymapp.forms.UserProfileForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
 import ru.kpfu.itis.gymapp.services.UserProfileService;
+import ru.kpfu.itis.gymapp.validators.UserProfileFormValidator;
 
 import javax.validation.Valid;
 
@@ -31,6 +31,14 @@ public class ProfileController {
     @Autowired
     private AuthenticationService authService;
 
+    @Autowired
+    private UserProfileFormValidator validator;
+
+    @InitBinder("profileForm")
+    public void initUserFormValidator(WebDataBinder binder) {
+        binder.addValidators(validator);
+    }
+
     @GetMapping
     public String getProfilePage(ModelMap model, Authentication auth) {
         User user = authService.getUserByAuthentication(auth);
@@ -40,13 +48,15 @@ public class ProfileController {
     }
 
     @PostMapping
-    public String editProfile(ModelMap model, @Valid UserProfileForm form,
+    public String editProfile(ModelMap model, @Valid @ModelAttribute("profileForm") UserProfileForm form,
                               BindingResult errors, Authentication auth) {
+        User user = authService.getUserByAuthentication(auth);
         if (errors.hasErrors()) {
-            model.addAttribute("profileErrors", errors.getAllErrors());
+            UserProfileDto userProfile = userProfileService.getUserProfile(user.getId());
+            model.addAttribute("userProfile", userProfile);
+            model.addAttribute("errors", errors.getAllErrors());
             return "profile";
         } else {
-            User user = authService.getUserByAuthentication(auth);
             userProfileService.editUserProfile(form, user);
             return "redirect:/profile";
         }

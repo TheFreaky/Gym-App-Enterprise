@@ -68,6 +68,9 @@
             $('.cancel-edit-button').click(function () {
                 $('.edit-user-content').addClass('display-none');
             });
+        <#if errors??>
+            $('.edit-user-content').removeClass('display-none');
+        </#if>
         });
     </script>
 
@@ -219,7 +222,7 @@
                                      aria-valuemax="100"
                                 <span class="show">
                                 <#if userProfile??>
-                                    ${userProfile.xp}/${userProfile.xpToLvlUp}
+                                ${userProfile.xp}/${userProfile.xpToLvlUp}
                                 </#if>
                                 </span>
                             </div>

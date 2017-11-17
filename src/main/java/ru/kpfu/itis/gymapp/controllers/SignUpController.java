@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
+import ru.kpfu.itis.gymapp.services.AuthenticationService;
 import ru.kpfu.itis.gymapp.services.UserService;
 import ru.kpfu.itis.gymapp.validators.UserRegistrationFormValidator;
 
@@ -22,10 +23,13 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 public class SignUpController {
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @Autowired
     private UserRegistrationFormValidator userRegistrationFormValidator;
+
+    @Autowired
+    private AuthenticationService authService;
 
     @InitBinder("userForm")
     public void initUserFormValidator(WebDataBinder binder) {
@@ -46,7 +50,8 @@ public class SignUpController {
             model.addAttribute("errors", errors.getAllErrors());
             return "welcome";
         } else {
-            service.register(userForm);
+            userService.register(userForm);
+            authService.autologin(userForm.getLogin(), userForm.getPassword());
             return "redirect:/trainings";
         }
     }
