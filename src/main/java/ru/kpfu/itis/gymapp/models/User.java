@@ -24,10 +24,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-@TypeDef(
-        name = "specialization",
-        typeClass = PostgreSQLEnumType.class
-)
+@TypeDef(name = "specialization", typeClass = PostgreSQLEnumType.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +39,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Type(type = "specialization")
     private Specialization specialization;
+
     private Long xp;
     private Short strength;
     private Short stamina;
