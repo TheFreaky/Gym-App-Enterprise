@@ -164,10 +164,10 @@
                                     <h5><b>${exercise.name}</b></h5>
                                 </div>
                                 <div class="col-md-2 train-checkbox display-none">
-                                    <input name="training-exercise" class="to-labelauty-icon check-icon labelauty"
+                                    <input name="exercises" class="to-labelauty-icon check-icon labelauty"
                                            type="checkbox"
                                            id="labelauty-${exercise.name}" style=""><label
-                                        for="labelauty-$${exercise.name}"><span
+                                        for="labelauty-${exercise.name}"><span
                                         class="labelauty-unchecked-image"></span><span
                                         class="labelauty-checked-image"></span></label>
                                     <label for="labelauty-${exercise.name}"><span
@@ -179,7 +179,7 @@
                     </#list>
                 </div>
                 <div id="hidden-training-name" style="display: none;">
-                    <input id="training-name" type="text" name="training-name" value="${training.name}"/>
+                    <input id="training-name" type="text" name="name" value="${training.name}"/>
                 </div>
                 <div class="buttons row col-sm-12">
                     <button class="center-block start-button button button-glow button-rounded button-primary-flat hvr-float-shadow">

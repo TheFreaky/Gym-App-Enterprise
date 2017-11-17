@@ -3,7 +3,7 @@ package ru.kpfu.itis.gymapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.dto.CompleteTrainingForm;
 import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.models.Training;
 import ru.kpfu.itis.gymapp.models.User;
@@ -63,7 +63,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void addUserTraining(User user, CompleteTrainingDto trainingDto) {
+    public void addUserTraining(User user, CompleteTrainingForm trainingDto) {
         Training training = trainingRepository.findByName(trainingDto.getName());
 
         Integer doneEx = trainingDto.getExercises().length;

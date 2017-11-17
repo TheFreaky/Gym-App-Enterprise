@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.dto.CompleteTrainingForm;
 import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
@@ -41,7 +41,7 @@ public class TrainingController {
     }
 
     @PostMapping("/training")
-    public String addTraining(CompleteTrainingDto trainingDto, Authentication authentication) {
+    public String addTraining(CompleteTrainingForm trainingDto, Authentication authentication) {
         User user = authService.getUserByAuthentication(authentication);
         trainingService.addUserTraining(user, trainingDto);
         return "redirect:/trainings";

@@ -1,7 +1,7 @@
 package ru.kpfu.itis.gymapp.services;
 
 
-import ru.kpfu.itis.gymapp.dto.CompleteTrainingDto;
+import ru.kpfu.itis.gymapp.dto.CompleteTrainingForm;
 import ru.kpfu.itis.gymapp.dto.TrainingDto;
 import ru.kpfu.itis.gymapp.models.Training;
 import ru.kpfu.itis.gymapp.models.User;
@@ -21,5 +21,5 @@ public interface TrainingService {
 
     Training getTraining(String name, User user);
 
-    void addUserTraining(User user, CompleteTrainingDto trainingDto);
+    void addUserTraining(User user, CompleteTrainingForm trainingDto);
 }

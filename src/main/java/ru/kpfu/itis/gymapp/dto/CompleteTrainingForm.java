@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompleteTrainingDto {
+public class CompleteTrainingForm {
     private String name;
     private String[] exercises;
 }

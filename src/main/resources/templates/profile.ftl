@@ -219,149 +219,149 @@
                                      style="width: ${userProfile.progress}%"
                                 </#if>
                                      aria-valuemin="0"
-                                     aria-valuemax="100"
+                                     aria-valuemax="100">
                                 <span class="show">
                                 <#if userProfile??>
                                 ${userProfile.xp}/${userProfile.xpToLvlUp}
                                 </#if>
                                 </span>
+                                </div>
                             </div>
+                            <button class="edit-user-button button button-3d button-primary button-rounded btn_3d">
+                                Edit
+                            </button>
                         </div>
-                        <button class="edit-user-button button button-3d button-primary button-rounded btn_3d">
-                            Edit
-                        </button>
-                    </div>
-                    <br>
-                    <div class="panel panel-widget panel-default">
-                        <div class="panel-heading">
-                            <span class="panel-title">Skills</span>
-                        </div>
-                        <div class="panel-body profile_status">
-                            <div>
-                                <p>
-                                    <strong>Flexibility</strong>
-                                    <small class="pull-right text-muted">
-                                        Level
-                                    <#if userProfile??>
-                                    ${userProfile.flexibilityLvl}
-                                    </#if>
-                                    </small>
-                                </p>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-success" role="progressbar"
-                                    <#if userProfile??>
-                                         aria-valuenow="${userProfile.flexibilityProgress}"
-                                         style="width: ${userProfile.flexibilityProgress}%"
-                                    </#if>
+                        <br>
+                        <div class="panel panel-widget panel-default">
+                            <div class="panel-heading">
+                                <span class="panel-title">Skills</span>
+                            </div>
+                            <div class="panel-body profile_status">
+                                <div>
+                                    <p>
+                                        <strong>Flexibility</strong>
+                                        <small class="pull-right text-muted">
+                                            Level
+                                        <#if userProfile??>
+                                        ${userProfile.flexibilityLvl}
+                                        </#if>
+                                        </small>
+                                    </p>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                        <#if userProfile??>
+                                             aria-valuenow="${userProfile.flexibilityProgress}"
+                                             style="width: ${userProfile.flexibilityProgress}%"
+                                        </#if>
 
-                                         aria-valuemin="0"
-                                         aria-valuemax="100">
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
                                             <span class="show">
                                             <#if userProfile??>
                                             ${userProfile.flexibilityProgress}/100
                                             </#if>
                                                     </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <p>
-                                    <strong>Stamina</strong>
-                                    <small class="pull-right text-muted">
-                                        Level
-                                    <#if userProfile??>
-                                    ${userProfile.staminaLvl}
-                                    </#if>
-                                    </small>
-                                </p>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-warning" role="progressbar"
-                                    <#if userProfile??>
-                                         aria-valuenow="${userProfile.staminaProgress}"
-                                         style="width: ${userProfile.staminaProgress}%"
-                                    </#if>
+                                <div>
+                                    <p>
+                                        <strong>Stamina</strong>
+                                        <small class="pull-right text-muted">
+                                            Level
+                                        <#if userProfile??>
+                                        ${userProfile.staminaLvl}
+                                        </#if>
+                                        </small>
+                                    </p>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar"
+                                        <#if userProfile??>
+                                             aria-valuenow="${userProfile.staminaProgress}"
+                                             style="width: ${userProfile.staminaProgress}%"
+                                        </#if>
 
-                                         aria-valuemin="0"
-                                         aria-valuemax="100">
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
 
                                             <span class="show">
                                             <#if userProfile??>
                                             ${userProfile.staminaProgress}/100
                                             </#if>
                                                 </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <p>
-                                    <strong>Strength</strong>
-                                    <small class="pull-right text-muted">
-                                        Level
-                                    <#if userProfile??>
-                                    ${userProfile.strengthLvl}
-                                    </#if>
-                                    </small>
-                                </p>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-info" role="progressbar"
-                                    <#if userProfile??>
-                                         aria-valuenow="${userProfile.strengthProgress}"
-                                         style="width: ${userProfile.strengthProgress}%"
-                                    </#if>
-                                         aria-valuemin="0"
-                                         aria-valuemax="100">
+                                <div>
+                                    <p>
+                                        <strong>Strength</strong>
+                                        <small class="pull-right text-muted">
+                                            Level
+                                        <#if userProfile??>
+                                        ${userProfile.strengthLvl}
+                                        </#if>
+                                        </small>
+                                    </p>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-info" role="progressbar"
+                                        <#if userProfile??>
+                                             aria-valuenow="${userProfile.strengthProgress}"
+                                             style="width: ${userProfile.strengthProgress}%"
+                                        </#if>
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
                                             <span class="show">
                                             <#if userProfile??>
                                             ${userProfile.strengthProgress}/100
                                             </#if>
                                                 </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs nav-custom">
-                                <li class="active">
-                                    <a href="#tab-activity" data-toggle="tab">
-                                        <strong>Last trainings</strong>
-                                    </a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content nopadding noborder">
-                                <div id="tab-activity" class="tab-pane fade in active">
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive">
-                                            <tbody>
-                                            <#if userProfile??>
-                                                <#list userProfile.userTrainings as userTraining>
-                                                <tr>
-                                                    <td>
-                                                    ${userTraining.training.name}
-                                                    </td>
-                                                    <td>
-                                                    ${userTraining.date}
-                                                    </td>
-                                                </tr>
-                                                </#list>
-                                            </#if>
-                                            </tbody>
-                                        </table>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs nav-custom">
+                                    <li class="active">
+                                        <a href="#tab-activity" data-toggle="tab">
+                                            <strong>Last trainings</strong>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content nopadding noborder">
+                                    <div id="tab-activity" class="tab-pane fade in active">
+                                        <div class="table-responsive">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                <#if userProfile??>
+                                                    <#list userProfile.userTrainings as userTraining>
+                                                    <tr>
+                                                        <td>
+                                                        ${userTraining.training.name}
+                                                        </td>
+                                                        <td>
+                                                        ${userTraining.date}
+                                                        </td>
+                                                    </tr>
+                                                    </#list>
+                                                </#if>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- tab-content -->
                             </div>
-                            <!-- tab-content -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
 </body>
