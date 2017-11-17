@@ -30,7 +30,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfileDto getUserProfile(Long id) {
         User user = userRepository.findOne(id);
-        List<UserTraining> userTrainings = userTrainingRepository.findAllByUserId(id);
+        List<UserTraining> userTrainings = userTrainingRepository.findFirst10ByUserIdOrderByDateDescIdDesc(id);
 
         Long xp = user.getXp();
         XpDetailsDto userXpDetails = userLevelService.getXpDetails(xp);

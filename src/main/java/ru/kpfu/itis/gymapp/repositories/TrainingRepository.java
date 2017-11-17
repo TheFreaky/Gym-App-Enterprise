@@ -16,10 +16,10 @@ import java.util.List;
 public interface TrainingRepository extends JpaRepository<Training, Integer> {
     Training findByName(String name);
     
-    List<Training> findAllByMinLvlLessThan(Integer lvl);
+    List<Training> findAllByMinLvlLessThanEqual(Integer lvl);
 
-    List<Training> findAllByMinLvlLessThanOrderByComplexity(Integer lvl);
+    List<Training> findAllByMinLvlLessThanEqualOrderByComplexity(Integer lvl);
 
-    List<Training> findAllByMinLvlLessThanOrderByType(Integer lvl);
+    List<Training> findAllByMinLvlLessThanEqualOrderByType(Integer lvl);
 
 }

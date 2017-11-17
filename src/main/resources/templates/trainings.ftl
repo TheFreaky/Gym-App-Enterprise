@@ -63,7 +63,7 @@
         }
 
         .content {
-            height: 90.5vh;
+            height: 92vh;
         }
 
         .content .train {

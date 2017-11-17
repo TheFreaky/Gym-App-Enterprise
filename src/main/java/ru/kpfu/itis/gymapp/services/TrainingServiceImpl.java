@@ -36,7 +36,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public List<TrainingDto> getTrainings(User user) {
-        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThan);
+        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanEqual);
     }
 
     @Override
@@ -92,10 +92,10 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     private List<TrainingDto> getTrainingsSortedByType(User user) {
-        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByType);
+        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanEqualOrderByType);
     }
 
     private List<TrainingDto> getTrainingsSortedByComplexity(User user) {
-        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanOrderByComplexity);
+        return trainingToTrainingDto(user, trainingRepository::findAllByMinLvlLessThanEqualOrderByComplexity);
     }
 }
