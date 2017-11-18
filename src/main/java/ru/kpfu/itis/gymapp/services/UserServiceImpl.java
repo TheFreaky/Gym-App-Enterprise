@@ -8,6 +8,7 @@ import ru.kpfu.itis.gymapp.forms.UserSettingForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.enums.Role;
 import ru.kpfu.itis.gymapp.models.enums.Specialization;
+import ru.kpfu.itis.gymapp.models.enums.State;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 
 /**
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void register(UserRegistrationForm userForm) {
+    public User register(UserRegistrationForm userForm) {
         String hashPassword = passwordEncoder.encode(userForm.getPassword());
         User user = User.builder()
                 .name(userForm.getName())
@@ -39,8 +40,10 @@ public class UserServiceImpl implements UserService {
                 .strength((short) 0)
                 .specialization(Specialization.COMMON)
                 .role(Role.USER)
+                .state(State.NOT_CONFIRMED)
                 .build();
         userRepository.save(user);
+        return user;
     }
 
     @Override

@@ -12,5 +12,5 @@ import ru.kpfu.itis.gymapp.models.User;
 public interface AuthenticationService {
     User getUserByAuthentication(Authentication authentication);
 
-    void autologin(String username, String password);
+    void autoLogin(String username, String password);
 }

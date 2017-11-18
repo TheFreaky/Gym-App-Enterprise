@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kpfu.itis.gymapp.models.User;
+import ru.kpfu.itis.gymapp.models.enums.State;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !user.getState().equals(State.BANNED);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getState().equals(State.CONFIRMED);
     }
 
     public User getUser() {

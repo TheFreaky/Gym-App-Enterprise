@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gymapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +34,9 @@ public class ProfileController {
 
     @Autowired
     private UserProfileFormValidator validator;
+
+    @Autowired
+    private MessageSource messages;
 
     @InitBinder("profileForm")
     public void initUserFormValidator(WebDataBinder binder) {

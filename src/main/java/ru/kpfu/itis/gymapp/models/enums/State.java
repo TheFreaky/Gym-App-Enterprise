@@ -7,5 +7,5 @@ package ru.kpfu.itis.gymapp.models.enums;
  * @version v1.0
  */
 public enum State {
-    CONFIRMED, NOT_CONFIRMED, BANNED,
+    CONFIRMED, NOT_CONFIRMED, BANNED, DELETED
 }

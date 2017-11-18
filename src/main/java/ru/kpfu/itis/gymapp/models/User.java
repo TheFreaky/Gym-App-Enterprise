@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import ru.kpfu.itis.gymapp.models.enums.Role;
 import ru.kpfu.itis.gymapp.models.enums.Specialization;
+import ru.kpfu.itis.gymapp.models.enums.State;
 
 import javax.persistence.*;
 
@@ -48,4 +49,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private State state;
 }

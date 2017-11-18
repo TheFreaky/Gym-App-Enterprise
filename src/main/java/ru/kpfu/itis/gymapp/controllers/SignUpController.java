@@ -7,10 +7,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
+import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
 import ru.kpfu.itis.gymapp.services.UserService;
+import ru.kpfu.itis.gymapp.services.VerificationService;
 import ru.kpfu.itis.gymapp.validators.UserRegistrationFormValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -31,6 +34,9 @@ public class SignUpController {
     @Autowired
     private AuthenticationService authService;
 
+    @Autowired
+    private VerificationService verificationService;
+
     @InitBinder("userForm")
     public void initUserFormValidator(WebDataBinder binder) {
         binder.addValidators(userRegistrationFormValidator);
@@ -44,15 +50,28 @@ public class SignUpController {
 
     @PostMapping
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-                         BindingResult errors, ModelMap model) {
+                         BindingResult errors, ModelMap model, HttpServletRequest request) {
         if (errors.hasErrors()) {
             model.addAttribute("user", userForm);
             model.addAttribute("errors", errors.getAllErrors());
             return "welcome";
         } else {
-            userService.register(userForm);
-            authService.autologin(userForm.getLogin(), userForm.getPassword());
+            User register = userService.register(userForm);
+            String url = request.getScheme() + "://" + request.getServerName() + request.getContextPath();
+            verificationService.makeVerification(register, url);
+
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/accept")
+    public String confirmRegistration(@RequestParam("token") String token) {
+        User user = verificationService.confirmVerification(token);
+        if (user != null) {
+            authService.autoLogin(user.getLogin(), user.getPassword());
             return "redirect:/trainings";
+        } else {
+            return "redirect:/";
         }
     }
 }

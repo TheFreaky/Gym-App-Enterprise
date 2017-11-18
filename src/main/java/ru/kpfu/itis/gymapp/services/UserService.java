@@ -11,7 +11,7 @@ import ru.kpfu.itis.gymapp.models.User;
  * @version v1.0
  */
 public interface UserService {
-    void register(UserRegistrationForm userForm);
+    User register(UserRegistrationForm userForm);
 
     void editUserData(UserSettingForm form, User user);
 }
