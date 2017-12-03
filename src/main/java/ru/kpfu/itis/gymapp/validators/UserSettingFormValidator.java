@@ -26,19 +26,19 @@ public class UserSettingFormValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         UserSettingForm form = (UserSettingForm) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "empty.login", "Пустой логин");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "empty.password", "Пустой пароль");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordRepeat", "empty.password-repeat", "Пустой пароль");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "empty.login");
 
-        String regex = ".+@.+\\.[a-z]+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(form.getLogin());
-        if (!matcher.matches()) {
+        String emailRegex = ".+@.+\\.[a-z]+";
+        Matcher emailMatcher = Pattern.compile(emailRegex)
+                .matcher(form.getLogin());
+        if (!emailMatcher.matches()) {
             errors.reject("bad.email");
         }
 
-        if (!form.getPassword().equals(form.getPasswordRepeat())) {
-            errors.reject("mismatched.passwords", "Пароли не совпадают");
+        if ((form.getPassword() != null && form.getPassword().isEmpty())
+                && (form.getPasswordRepeat() != null && form.getPasswordRepeat().isEmpty())
+                && !form.getPassword().equals(form.getPasswordRepeat())) {
+            errors.reject("mismatched.passwords");
         }
     }
 }

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 import ru.kpfu.itis.gymapp.security.details.UserDetailsImpl;
+import ru.kpfu.itis.gymapp.services.AuthenticationService;
 
 /**
  * 10.11.2017

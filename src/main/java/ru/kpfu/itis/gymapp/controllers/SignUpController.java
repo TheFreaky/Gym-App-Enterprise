@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
-import ru.kpfu.itis.gymapp.services.UserService;
-import ru.kpfu.itis.gymapp.services.VerificationService;
+import ru.kpfu.itis.gymapp.services.RegistrationService;
+import ru.kpfu.itis.gymapp.services.external.EmailVerificationService;
 import ru.kpfu.itis.gymapp.validators.UserRegistrationFormValidator;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -26,16 +25,16 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 public class SignUpController {
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRegistrationFormValidator userRegistrationFormValidator;
-
-    @Autowired
     private AuthenticationService authService;
 
     @Autowired
-    private VerificationService verificationService;
+    private RegistrationService registrationService;
+
+    @Autowired
+    private EmailVerificationService verificationService;
+
+    @Autowired
+    private UserRegistrationFormValidator userRegistrationFormValidator;
 
     @InitBinder("userForm")
     public void initUserFormValidator(WebDataBinder binder) {
@@ -50,15 +49,14 @@ public class SignUpController {
 
     @PostMapping
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-                         BindingResult errors, ModelMap model, HttpServletRequest request) {
+                         BindingResult errors, ModelMap model) {
         if (errors.hasErrors()) {
             model.addAttribute("user", userForm);
             model.addAttribute("errors", errors.getAllErrors());
             return "welcome";
         } else {
-            User register = userService.register(userForm);
-            String url = request.getScheme() + "://" + request.getServerName() + request.getContextPath();
-            verificationService.makeVerification(register, url);
+            User register = registrationService.register(userForm);
+            verificationService.makeVerification(register, userForm.getLogin());
 
             return "redirect:/";
         }

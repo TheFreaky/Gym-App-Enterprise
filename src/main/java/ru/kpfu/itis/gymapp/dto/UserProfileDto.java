@@ -23,7 +23,7 @@ public class UserProfileDto {
     private Long id;
     private String name;
     private String login;
-    private Float weight;
+    private float weight;
     private Short height;
     private Specialization specialization;
     private Integer lvl;

@@ -1,7 +1,8 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.impl;
 
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.dto.XpDetailsDto;
+import ru.kpfu.itis.gymapp.services.UserLevelService;
 
 /**
  * 05.11.2017

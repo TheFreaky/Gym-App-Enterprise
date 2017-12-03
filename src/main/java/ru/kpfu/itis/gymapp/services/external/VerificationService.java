@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.external;
 
 import ru.kpfu.itis.gymapp.models.User;
 
@@ -9,7 +9,7 @@ import ru.kpfu.itis.gymapp.models.User;
  * @version v1.0
  */
 public interface VerificationService {
-    void makeVerification(User user, String url);
+    void makeVerification(User user, String to);
 
     User confirmVerification(String token);
 }

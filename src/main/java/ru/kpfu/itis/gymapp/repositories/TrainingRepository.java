@@ -21,5 +21,4 @@ public interface TrainingRepository extends JpaRepository<Training, Integer> {
     List<Training> findAllByMinLvlLessThanEqualOrderByComplexity(Integer lvl);
 
     List<Training> findAllByMinLvlLessThanEqualOrderByType(Integer lvl);
-
 }

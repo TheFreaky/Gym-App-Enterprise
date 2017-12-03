@@ -1,29 +1,28 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.gymapp.forms.UserRegistrationForm;
-import ru.kpfu.itis.gymapp.forms.UserSettingForm;
 import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.enums.Role;
 import ru.kpfu.itis.gymapp.models.enums.Specialization;
 import ru.kpfu.itis.gymapp.models.enums.State;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
+import ru.kpfu.itis.gymapp.services.RegistrationService;
 
 /**
- * 10.11.2017
+ * 24.11.2017
  *
  * @author Kuznetsov Maxim
  * @version v1.0
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Override
     public User register(UserRegistrationForm userForm) {
@@ -44,14 +43,5 @@ public class UserServiceImpl implements UserService {
                 .build();
         userRepository.save(user);
         return user;
-    }
-
-    @Override
-    public void editUserData(UserSettingForm form, User user) {
-        user = userRepository.findOne(user.getId());
-        String hashPassword = passwordEncoder.encode(form.getPassword());
-        user.setLogin(form.getLogin().toLowerCase());
-        user.setPassword(hashPassword);
-        userRepository.save(user);
     }
 }

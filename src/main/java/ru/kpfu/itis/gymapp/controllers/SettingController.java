@@ -8,8 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.gymapp.forms.UserSettingForm;
+import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.services.AuthenticationService;
-import ru.kpfu.itis.gymapp.services.UserService;
+import ru.kpfu.itis.gymapp.services.UserSettingService;
 import ru.kpfu.itis.gymapp.validators.UserSettingFormValidator;
 
 import javax.validation.Valid;
@@ -24,7 +25,7 @@ import javax.validation.Valid;
 @RequestMapping("/setting")
 public class SettingController {
     @Autowired
-    private UserService userService;
+    private UserSettingService userSettingService;
 
     @Autowired
     private AuthenticationService authService;
@@ -33,12 +34,17 @@ public class SettingController {
     private UserSettingFormValidator validator;
 
     @InitBinder("settingForm")
-    public void initUserFormValidator(WebDataBinder binder) {
+    public void initSettingFormValidator(WebDataBinder binder) {
         binder.addValidators(validator);
     }
 
     @GetMapping
-    public String getSettingPage() {
+    public String getSettingPage(ModelMap model, Authentication auth) {
+        User user = authService.getUserByAuthentication(auth);
+        model.addAttribute("setting", UserSettingForm.builder()
+                .login(user.getLogin())
+                .build()
+        );
         return "setting";
     }
 
@@ -52,9 +58,7 @@ public class SettingController {
             model.addAttribute("errors", errors.getAllErrors());
             return "setting";
         } else {
-
-            userService.editUserData(form, authService.getUserByAuthentication(auth));
-            userService.editUserData(form, authService.getUserByAuthentication(auth));
+            userSettingService.editUserData(form, authService.getUserByAuthentication(auth));
             return "redirect:/setting";
         }
     }

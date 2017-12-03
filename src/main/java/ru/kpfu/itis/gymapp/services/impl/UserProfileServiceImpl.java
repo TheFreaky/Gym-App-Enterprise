@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,8 @@ import ru.kpfu.itis.gymapp.models.User;
 import ru.kpfu.itis.gymapp.models.UserTraining;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
+import ru.kpfu.itis.gymapp.services.UserLevelService;
+import ru.kpfu.itis.gymapp.services.UserProfileService;
 
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserLevelService userLevelService;
 
     @Override
-    public UserProfileDto getUserProfile(Long id) {
-        User user = userRepository.findOne(id);
-        List<UserTraining> userTrainings = userTrainingRepository.findFirst10ByUserIdOrderByDateDescIdDesc(id);
+    public UserProfileDto getUserProfile(User user) {
+        List<UserTraining> userTrainings =
+                userTrainingRepository.findFirst10ByUserIdOrderByDateDescIdDesc(user.getId());
 
         Long xp = user.getXp();
         XpDetailsDto userXpDetails = userLevelService.getXpDetails(xp);

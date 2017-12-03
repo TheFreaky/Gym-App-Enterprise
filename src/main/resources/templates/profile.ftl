@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pimp Yourself</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -151,10 +151,10 @@
                                             <div class="form-group">
                                                 <label for="weight" class="col-sm-2 control-label">Weight</label>
                                                 <div class="col-sm-10">
-                                                    <input id="weight" name="weight" type="number" min="30"
+                                                    <input id="weight" name="weight" type="text" min="30"
                                                            max="350" value=
                                                     <#if userProfile??>
-                                                            "${userProfile.weight}"
+                                                            "${userProfile.weight?replace(",", ".")}"
                                                     </#if>
                                                            class="form-control required">
                                                 </div>

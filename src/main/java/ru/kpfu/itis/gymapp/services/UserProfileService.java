@@ -12,7 +12,7 @@ import ru.kpfu.itis.gymapp.models.User;
  * @version v1.0
  */
 public interface UserProfileService {
-    UserProfileDto getUserProfile(Long id);
+    UserProfileDto getUserProfile(User user);
 
     void editUserProfile(UserProfileForm form, User user);
 }

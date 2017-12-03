@@ -27,10 +27,10 @@ import java.util.List;
 @RequestMapping
 public class TrainingController {
     @Autowired
-    private TrainingService trainingService;
+    private AuthenticationService authService;
 
     @Autowired
-    private AuthenticationService authService;
+    private TrainingService trainingService;
 
     @GetMapping("/training")
     public String getTrainingPage(ModelMap model,

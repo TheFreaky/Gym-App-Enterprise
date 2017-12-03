@@ -1,6 +1,6 @@
 <#ftl encoding='UTF-8'>
 <#import "spring.ftl" as spring />
-<#-- @ftlvariable name="setting" type="ru.kpfu.itis.gymapp.forms.UserSettingForm" -->
+<#-- @ftlvariable name="phoneError" type="java.lang.String" -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,16 +33,12 @@
 
     <style>
 
-        .edit-user-content .panel {
+        .content .panel {
             padding: 2em;
             background-color: #f2f1e6;
             border-radius: 3px;
             -webkit-box-shadow: 0 1px 2px rgba(88, 118, 124, .6);
             box-shadow: 0 1px 2px rgba(88, 118, 124, .6);
-        }
-
-        .edit-user-content .panel-body {
-            margin-top: 1.5em;
         }
 
         .content .panel {
@@ -52,15 +48,11 @@
         }
 
         .content {
-            height: 91.5vh;
+            height: 90.5vh;
         }
 
         .panel-heading {
             margin-bottom: 2em;
-        }
-
-        button > a {
-            color: #fff;
         }
     </style>
 
@@ -69,62 +61,33 @@
 
 <#include "/header.ftl">
 
-<section class="edit-user-content content">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-primary">
+<section class="content">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-primary">
 
                 <div class="panel-heading col-md-12">
-                    <h3 class="panel-title text-center">Account settings</h3>
+                    <h3 class="panel-title text-center">Phone confirmation</h3>
                 </div>
 
                 <div class="panel-body">
-                    <form id="adduser_form" method="POST" action="<@spring.url "/setting"/>"
+                    <form id="adduser_form" method="POST" action="<@spring.url "/setting/phone/accept"/>"
                           class="form-horizontal bv-form"
                           novalidate="novalidate">
-                    <#if errors??>
-                        <#list errors as error>
-                            <div class="text-danger">* <@spring.message "${error.code}"/></div>
-                        </#list>
+                    <#if phoneError??>
+                            <div class="text-danger">* ${phoneError}</div>
                     </#if>
                         <div class="form-group">
-                            <label for="email" class="col-md-2 control-label">Email</label>
+                            <label for="phone-code" class="col-md-2 control-label">Code</label>
                             <div class="col-md-10">
-                                <input id="email" name="login" placeholder="E-mail" type="text"
-                                       class="form-control required email" data-bv-field="email"  value=
-                                <#if setting??>
-                                        "${setting.login}"
-                                </#if>
-                                >
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-2 control-label">Password</label>
-                            <div class="col-md-10">
-                                <input id="password" name="password" type="password" placeholder="Password"
-                                       class="form-control required" data-bv-field="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirm" class="col-md-2 control-label">Confirm Password</label>
-                            <div class="col-md-10">
-                                <input id="password_confirm" name="passwordRepeat" type="password"
-                                       placeholder="Confirm Password " class="form-control required"
-                                       data-bv-field="password_confirm">
+                                <input id="phone-code" name="token" type="text"
+                                       class="form-control required" data-bv-field="phone-code">
                             </div>
                         </div>
                         <input type="submit"
                                class="center-block finish-button button button button-3d button-primary button-rounded btn_3d"
                                value="Save">
                     </form>
-                    <br>
-                    <div>
-                        <button
-                               class="center-block finish-button button button button-3d button-primary button-rounded btn_3d">
-                            <a href="<@spring.url "/setting/phone"/>">Set phone</a></button>
-                        <#--<a href="<@spring.url "/setting/phone"/>" class="center-block finish-button button button-->
-                        <#--button-3d button-primary button-rounded btn_3d" role="button">Set phone</a>-->
-                    </div>
 
                 </div>
             </div>

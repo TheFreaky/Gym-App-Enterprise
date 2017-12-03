@@ -32,7 +32,7 @@ public class UserRegistrationFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserRegistrationForm form = (UserRegistrationForm)target;
 
-        userRepository.findByLogin(form.getLogin()).ifPresent(user -> errors.reject("bad.login"));
+        userRepository.findByLogin(form.getLogin()).ifPresent(user -> errors.reject("used.email"));
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "empty.login");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "empty.name");

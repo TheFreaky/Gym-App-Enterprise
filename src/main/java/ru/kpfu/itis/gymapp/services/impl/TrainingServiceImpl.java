@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gymapp.services;
+package ru.kpfu.itis.gymapp.services.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import ru.kpfu.itis.gymapp.models.UserTraining;
 import ru.kpfu.itis.gymapp.repositories.TrainingRepository;
 import ru.kpfu.itis.gymapp.repositories.UserRepository;
 import ru.kpfu.itis.gymapp.repositories.UserTrainingRepository;
+import ru.kpfu.itis.gymapp.services.TrainingService;
+import ru.kpfu.itis.gymapp.services.UserLevelService;
 
 import java.util.Date;
 import java.util.List;
@@ -81,7 +83,7 @@ public class TrainingServiceImpl implements TrainingService {
 
 
     private List<TrainingDto> trainingToTrainingDto (User user, Function<Integer, List<Training>> function) {
-        Integer lvl = userLevelService.getLvl(userRepository.findOne(user.getId()).getXp());
+        Integer lvl = userLevelService.getLvl(user.getXp());
         return function.apply(lvl).stream()
                 .map(training -> TrainingDto.builder()
                         .name(training.getName())

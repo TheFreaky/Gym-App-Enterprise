@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pimp Yourself</title>
 
     <script src="http://coreplusdemo.lorvent.com/js/app.js.pagespeed.jm.Xs4nyYH02x.js"
             type="text/javascript"></script>
@@ -131,8 +131,12 @@
                                     <input id="signin-username-field" type="text" name="login">
                                     <label for="signin-password-field">Пароль:</label>
                                     <input id="signin-password-field" type="password" name="password">
-                                    <button type="submit">Войти</button>
-                                    <a href="">Забыли пароль?</a>
+                                    <label for="signin-remember-me">Remember me</label>
+                                    <input id="signin-remember-me" type="checkbox" name="remember-me">
+                                    <div>
+                                        <button type="submit">Войти</button>
+                                        <a href="">Забыли пароль?</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>

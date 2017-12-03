@@ -1,7 +1,6 @@
 package ru.kpfu.itis.gymapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,18 +34,15 @@ public class ProfileController {
     @Autowired
     private UserProfileFormValidator validator;
 
-    @Autowired
-    private MessageSource messages;
-
     @InitBinder("profileForm")
-    public void initUserFormValidator(WebDataBinder binder) {
+    public void initProfileFormValidator(WebDataBinder binder) {
         binder.addValidators(validator);
     }
 
     @GetMapping
     public String getProfilePage(ModelMap model, Authentication auth) {
         User user = authService.getUserByAuthentication(auth);
-        UserProfileDto userProfile = userProfileService.getUserProfile(user.getId());
+        UserProfileDto userProfile = userProfileService.getUserProfile(user);
         model.addAttribute("userProfile", userProfile);
         return "profile";
     }
@@ -56,7 +52,7 @@ public class ProfileController {
                               BindingResult errors, Authentication auth) {
         User user = authService.getUserByAuthentication(auth);
         if (errors.hasErrors()) {
-            UserProfileDto userProfile = userProfileService.getUserProfile(user.getId());
+            UserProfileDto userProfile = userProfileService.getUserProfile(user);
             model.addAttribute("userProfile", userProfile);
             model.addAttribute("errors", errors.getAllErrors());
             return "profile";
