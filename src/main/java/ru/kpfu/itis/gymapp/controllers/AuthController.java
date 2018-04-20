@@ -1,5 +1,6 @@
 package ru.kpfu.itis.gymapp.controllers;
 
+import com.google.common.base.Strings;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,11 +21,13 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login(ModelMap model, Authentication authentication,
-                        @RequestParam Optional<String> error) {
+                        @RequestParam(required = false) String error) {
         if (authentication != null) {
             return "redirect:/";
         }
-        error.ifPresent(s -> model.addAttribute("signinErrors", "Wrong email or password"));
+        if (!Strings.isNullOrEmpty(error)) {
+            model.addAttribute("signinErrors", "Wrong email or password");
+        }
 
         return "welcome";
     }

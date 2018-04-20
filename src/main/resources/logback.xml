@@ -1,0 +1,85 @@
+<configuration>
+
+    <appender name="SIFT-STDOUT-LOGGING" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="ch.qos.logback.classic.sift.JNDIBasedContextDiscriminator">
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+                <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+                    <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                        <marker>EVENT_REPORTER</marker>
+                    </evaluator>
+                    <onMismatch>NEUTRAL</onMismatch>
+                    <onMatch>DENY</onMatch>
+                </filter>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} %-5level [%thread] %contextName %logger{36}:%line %X{prefix} %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="SIFT-FILE-LOGGING" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="ch.qos.logback.classic.sift.JNDIBasedContextDiscriminator">
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+                    <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                        <marker>EVENT_REPORTER</marker>
+                    </evaluator>
+                    <onMismatch>NEUTRAL</onMismatch>
+                    <onMatch>DENY</onMatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${catalina.base}/logs/api.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} %-5level [%thread] %contextName %logger{36}:%line %X{prefix} %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="SIFT-FILE-EVENT_REPORTER_LOGGING" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="ch.qos.logback.classic.sift.JNDIBasedContextDiscriminator">
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+                    <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                        <marker>EVENT_REPORTER</marker>
+                    </evaluator>
+                    <onMismatch>DENY</onMismatch>
+                    <onMatch>NEUTRAL</onMatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${catalina.base}/logs/event-reporter.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} %-5level [%thread] %contextName %logger{36}:%line %X{prefix} %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <logger name="org.apache.cxf" level="info"/>
+    <logger name="org.springframework" level="info"/>
+    <logger name="ru.kpfu.itis.gymapp" level="error"/>
+
+
+    <root level="info">
+        <appender-ref ref="SIFT-STDOUT-LOGGING"/>
+        <appender-ref ref="SIFT-FILE-LOGGING"/>
+        <appender-ref ref="SIFT-FILE-EVENT_REPORTER_LOGGING"/>
+    </root>
+
+</configuration>

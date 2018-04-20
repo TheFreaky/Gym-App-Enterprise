@@ -22,8 +22,6 @@ import ru.kpfu.itis.gymapp.services.AuthenticationService;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserDetailsService userDetailsService;
@@ -39,8 +37,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         Authentication usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-
-//        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
