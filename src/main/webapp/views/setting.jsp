@@ -1,6 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#import "spring.ftl" as spring />
-<#-- @ftlvariable name="setting" type="ru.kpfu.itis.gymapp.forms.UserSettingForm" -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +25,7 @@
     <link type="text/css"
           href="http://coreplusdemo.lorvent.com/A.css,,_app.css+css,,_custom.css+vendors,,_simple-line-icons,,_css,,_simple-line-icons.css+css,,_custom_css,,_user_profile.css,Mcc.YDRojCQWPN.css.pagespeed.cf.f_4TVswlNK.css"
           rel="stylesheet"/>
-    <link href="<@spring.url "/resources/css/style.css"/>"
+    <link href="<c:url value= "/static/css/style.css"/>"
           type="text/css"
           rel="stylesheet">
 
@@ -67,7 +66,7 @@
 </head>
 <body>
 
-<#include "/header.ftl">
+<jsp:include page="header.jsp"/>
 
 <section class="edit-user-content content">
         <div class="row">
@@ -77,51 +76,38 @@
                 <div class="panel-heading col-md-12">
                     <h3 class="panel-title text-center">Account settings</h3>
                 </div>
-
                 <div class="panel-body">
-                    <form id="adduser_form" method="POST" action="<@spring.url "/setting"/>"
-                          class="form-horizontal bv-form"
-                          novalidate="novalidate">
-                    <#if errors??>
-                        <#list errors as error>
-                            <div class="text-danger">* <@spring.message "${error.code}"/></div>
-                        </#list>
-                    </#if>
+                    <form:form method="POST" action="/setting" commandName="setting"
+                               cssClass="form-horizontal bv-form" id="adduser_form">
+                        <form:errors path="*" cssClass="text-danger"/><br>
                         <div class="form-group">
-                            <label for="email" class="col-md-2 control-label">Email</label>
+                            <form:label path="email" cssClass="col-sm-2 control-label">Email</form:label>
                             <div class="col-md-10">
-                                <input id="email" name="login" placeholder="E-mail" type="text"
-                                       class="form-control required email" data-bv-field="email"  value=
-                                <#if setting??>
-                                        "${setting.login}"
-                                </#if>
-                                >
+                            <form:input id="email" path="login" cssClass="form-control required email"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="col-md-2 control-label">Password</label>
+                            <form:label path="password" cssClass="col-sm-2 control-label">Password</form:label>
                             <div class="col-md-10">
-                                <input id="password" name="password" type="password" placeholder="Password"
-                                       class="form-control required" data-bv-field="password">
+                                <form:password id="password" path="password" cssClass="form-control required"/>
                             </div>
                         </div>
                         <div class="form-group">
+                            <form:label path="passwordRepeat" cssClass="col-sm-2 control-label">Email</form:label>
                             <label for="password_confirm" class="col-md-2 control-label">Confirm Password</label>
                             <div class="col-md-10">
-                                <input id="password_confirm" name="passwordRepeat" type="password"
-                                       placeholder="Confirm Password " class="form-control required"
-                                       data-bv-field="password_confirm">
+                                <form:input id="password_confirm" path="passwordRepeat" cssClass="form-control required"/>
                             </div>
                         </div>
                         <input type="submit"
                                class="center-block finish-button button button button-3d button-primary button-rounded btn_3d"
                                value="Save">
-                    </form>
+                    </form:form>
                     <br>
                     <div>
                         <button
                                class="center-block finish-button button button button-3d button-primary button-rounded btn_3d">
-                            <a href="<@spring.url "/setting/phone"/>">Set phone</a></button>
+                            <a href="<c:url value="/setting/phone"/>">Set phone</a></button>
                     </div>
 
                 </div>

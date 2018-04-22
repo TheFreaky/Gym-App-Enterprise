@@ -1,7 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#import "spring.ftl" as spring />
-<#-- @ftlvariable name="phoneForm" type="ru.kpfu.itis.gymapp.forms.UserPhoneForm" -->
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,12 +24,13 @@
     <link type="text/css"
           href="http://coreplusdemo.lorvent.com/A.css,,_app.css+css,,_custom.css+vendors,,_simple-line-icons,,_css,,_simple-line-icons.css+css,,_custom_css,,_user_profile.css,Mcc.YDRojCQWPN.css.pagespeed.cf.f_4TVswlNK.css"
           rel="stylesheet"/>
-    <link href="<@spring.url "/resources/css/style.css"/>"
+    <link href="<c:url value="/static/css/style.css"/>"
           type="text/css"
           rel="stylesheet">
 
 
     <style>
+
         .content .panel {
             padding: 2em;
             background-color: #f2f1e6;
@@ -47,7 +46,7 @@
         }
 
         .content {
-            height: 91.5vh;
+            height: 90.5vh;
         }
 
         .panel-heading {
@@ -58,7 +57,7 @@
 </head>
 <body>
 
-<#include "/header.ftl">
+<jsp:include page="header.jsp" />
 
 <section class="content">
     <div class="row">
@@ -66,29 +65,21 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading col-md-12">
-                    <h3 class="panel-title text-center">Phone settings</h3>
+                    <h3 class="panel-title text-center">Phone confirmation</h3>
                 </div>
 
                 <div class="panel-body">
-                    <form id="adduser_form" method="POST" action="<@spring.url "/setting/phone"/>"
+                    <form id="adduser_form" method="POST" action="<c:url value="/setting/phone/accept"/>"
                           class="form-horizontal bv-form"
                           novalidate="novalidate">
-                    <#if errors??>
-                        <#list errors as error>
-                            <div class="text-danger">* <@spring.message "${error.code}"/></div>
-                        </#list>
-                    </#if>
+                    <c:if test="${not empty phoneError}">
+                            <div class="text-danger">* ${phoneError}</div>
+                    </c:if>
                         <div class="form-group">
-                            <label for="phone" class="col-md-2 control-label">Phone</label>
+                            <label for="phone-code" class="col-md-2 control-label">Code</label>
                             <div class="col-md-10">
-                                <input id="phone" name="phone" placeholder="+7 XXX XXX XX XX" type="text"
-                                       class="form-control required" data-bv-field="phone"  value=
-                                <#if phoneForm??>
-                                    <#if phoneForm.phone??>
-                                            "${phoneForm.phone}"
-                                    </#if>
-                                </#if>
-                                >
+                                <input id="phone-code" name="token" type="text"
+                                       class="form-control required" data-bv-field="phone-code">
                             </div>
                         </div>
                         <input type="submit"

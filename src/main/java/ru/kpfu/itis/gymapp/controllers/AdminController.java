@@ -52,12 +52,9 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editUserProfile(ModelMap model, @Valid @ModelAttribute("profileForm") UserProfileForm form,
+    public String editUserProfile(@Valid @ModelAttribute("profileForm") UserProfileForm form,
                                   @PathVariable("id") Long id, BindingResult errors) {
         if (errors.hasErrors()) {
-            UserProfileDto userProfile = adminService.getUserProfile(id);
-            model.addAttribute("errors", errors.getAllErrors());
-            model.addAttribute("userProfile", userProfile);
             return "profile";
         } else {
             adminService.editUserProfile(form, id);

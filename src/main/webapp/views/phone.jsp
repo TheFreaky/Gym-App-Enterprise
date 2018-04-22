@@ -1,7 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#import "spring.ftl" as spring />
-<#-- @ftlvariable name="phoneError" type="java.lang.String" -->
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +24,12 @@
     <link type="text/css"
           href="http://coreplusdemo.lorvent.com/A.css,,_app.css+css,,_custom.css+vendors,,_simple-line-icons,,_css,,_simple-line-icons.css+css,,_custom_css,,_user_profile.css,Mcc.YDRojCQWPN.css.pagespeed.cf.f_4TVswlNK.css"
           rel="stylesheet"/>
-    <link href="<@spring.url "/css/style.css"/>"
+    <link href="<c:url value="/static/css/style.css"/>"
           type="text/css"
           rel="stylesheet">
 
 
     <style>
-
         .content .panel {
             padding: 2em;
             background-color: #f2f1e6;
@@ -48,7 +45,7 @@
         }
 
         .content {
-            height: 90.5vh;
+            height: 91.5vh;
         }
 
         .panel-heading {
@@ -59,7 +56,7 @@
 </head>
 <body>
 
-<#include "/header.ftl">
+<jsp:include page="header.jsp" />
 
 <section class="content">
     <div class="row">
@@ -67,27 +64,23 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading col-md-12">
-                    <h3 class="panel-title text-center">Phone confirmation</h3>
+                    <h3 class="panel-title text-center">Phone settings</h3>
                 </div>
 
                 <div class="panel-body">
-                    <form id="adduser_form" method="POST" action="<@spring.url "/setting/phone/accept"/>"
-                          class="form-horizontal bv-form"
-                          novalidate="novalidate">
-                    <#if phoneError??>
-                            <div class="text-danger">* ${phoneError}</div>
-                    </#if>
-                        <div class="form-group">
-                            <label for="phone-code" class="col-md-2 control-label">Code</label>
-                            <div class="col-md-10">
-                                <input id="phone-code" name="token" type="text"
-                                       class="form-control required" data-bv-field="phone-code">
-                            </div>
+                    <form:form method="POST" action="/setting/phone" commandName="phoneForm"
+                               cssClass="form-horizontal bv-form" id="adduser_form">
+                    <form:errors path="*" cssClass="text-danger"/><br>
+                    <div class="form-group">
+                        <form:label path="phone" cssClass="col-md-2 control-label">Phone</form:label>
+                        <div class="col-md-10">
+                            <form:input id="phone" path="phone" cssClass="form-control required"/>
                         </div>
-                        <input type="submit"
-                               class="center-block finish-button button button button-3d button-primary button-rounded btn_3d"
-                               value="Save">
-                    </form>
+                    </div>
+                    <input type="submit"
+                           class="center-block finish-button button button button-3d button-primary button-rounded btn_3d"
+                           value="Save">
+                    </form:form>
 
                 </div>
             </div>

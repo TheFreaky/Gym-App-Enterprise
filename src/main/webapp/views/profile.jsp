@@ -1,7 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#import "spring.ftl" as spring />
-<#-- @ftlvariable name="userProfile" type="ru.kpfu.itis.gymapp.dto.UserProfileDto" -->
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +19,7 @@
           href="http://coreplusdemo.lorvent.com/A.css,,_app.css+css,,_custom.css+vendors,,_simple-line-icons,,_css,,_simple-line-icons.css+css,,_custom_css,,_user_profile.css,Mcc.YDRojCQWPN.css.pagespeed.cf.f_4TVswlNK.css"
           rel="stylesheet"/>
 
-    <link href="<@spring.url "/css/style.css"/>" type="text/css" rel="stylesheet">
+    <link href="<c:url value="/static/css/style.css"/>" type="text/css" rel="stylesheet">
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -68,16 +66,13 @@
             $('.cancel-edit-button').click(function () {
                 $('.edit-user-content').addClass('display-none');
             });
-        <#if errors??>
-            $('.edit-user-content').removeClass('display-none');
-        </#if>
         });
     </script>
 
 </head>
 <body>
 
-<#include "/header.ftl">
+<jsp:include page="header.jsp"/>
 
 <section class="content">
     <div class="row">
@@ -94,82 +89,54 @@
                                     </h3>
                                 </div>
                                 <div class="panel-body">
-                                <#if errors??>
-                                    <#list errors as error>
-                                        <div class="text-danger">* <@spring.message "${error.code}"/></div>
-                                    </#list>
-                                </#if>
-                                    <form id="add-user-form" method="POST" action="<@spring.url "/profile"/>"
-                                          class="form-horizontal bv-form"
-                                          novalidate="novalidate">
+                                    <form:form method="POST" action="/profile" commandName="userProfile"
+                                               cssClass="form-horizontal bv-form" id="adduser_form">
+                                        <form:errors path="*" cssClass="text-danger"/><br>
                                         <button type="submit" class="bv-hidden-submit"
                                                 style="display: none; width: 0; height: 0;"></button>
                                         <div>
                                             <!--Name-->
                                             <div class="form-group">
-                                                <label for="name" class="col-sm-2 control-label">Name</label>
+                                                <form:label path="name"
+                                                            cssClass="col-sm-2 control-label">Name</form:label>
                                                 <div class="col-sm-10">
-                                                    <input id="name" name="name" type="text" placeholder="Name"
-                                                           class="form-control required" value=
-                                                    <#if userProfile??>
-                                                            "${userProfile.name}"
-                                                    </#if>
-                                                    >
+                                                    <form:input id="name" path="name" cssClass="form-control required"/>
                                                 </div>
                                             </div>
 
                                             <!--Gender-->
                                             <div class="form-group">
-                                                <label for="gender" class="col-sm-2 control-label">Gender</label>
+                                                <form:label path="gender"
+                                                            cssClass="col-sm-2 control-label">Gender</form:label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" id="gender" title="Select Gender"
-                                                            name="gender" tabindex="-1" aria-hidden="true"
-                                                            data-bv-field="gender"
-                                                            style="box-sizing: border-box;border: 1px solid;border-color: #979797 #DDD #DEDEDE;.border-radius: 2px;background: -webkit-gradient(linear,left top,left bottom,from(#F5F5F5),to(#FDFDFD));">
-                                                        <option disabled="">Select Gender</option>
-                                                        <option value="true"
-                                                        <#if userProfile??>
-                                                            <#if userProfile.gender !true>
-                                                                selected
-                                                            </#if>
-                                                        </#if>
-                                                        >Male
-                                                        </option>
-                                                        <option value="false"
-                                                        <#--<#if userProfile??>-->
-                                                        <#--<#if !userProfile.gender == false>-->
-                                                        <#--selected-->
-                                                        <#--</#if>-->
-                                                        <#--</#if>-->
-                                                        >Female
-                                                        </option>
-                                                    </select>
+                                                    <form:select path="gender" cssClass="form-control" id="gender"
+                                                                 title="Select Gender"
+                                                                 cssStyle="box-sizing: border-box;border: 1px solid;border-color: #979797 #DDD #DEDEDE;.border-radius: 2px;background: -webkit-gradient(linear,left top,left bottom,from(#F5F5F5),to(#FDFDFD));">
+                                                        <form:option value="NONE"
+                                                                     disabled="true">Select Gender</form:option>
+                                                        <form:option value="true">Male</form:option>
+                                                        <form:option value="false">Female</form:option>
+                                                    </form:select>
                                                 </div>
                                             </div>
 
                                             <!--Weight-->
                                             <div class="form-group">
-                                                <label for="weight" class="col-sm-2 control-label">Weight</label>
+                                                <form:label path="weight"
+                                                            cssClass="col-sm-2 control-label">Weight</form:label>
                                                 <div class="col-sm-10">
-                                                    <input id="weight" name="weight" type="text" min="30"
-                                                           max="350" value=
-                                                    <#if userProfile??>
-                                                            "${userProfile.weight?replace(",", ".")}"
-                                                    </#if>
-                                                           class="form-control required">
+                                                    <form:input id="weight" path="weight"
+                                                                cssClass="form-control required"/>
                                                 </div>
                                             </div>
 
                                             <!--Height-->
                                             <div class="form-group">
-                                                <label for="height" class="col-sm-2 control-label">Height</label>
+                                                <form:label path="height"
+                                                            cssClass="col-sm-2 control-label">Height</form:label>
                                                 <div class="col-sm-10">
-                                                    <input id="height" name="height" type="number" min="50"
-                                                           max="250" value=
-                                                    <#if userProfile??>
-                                                            "${userProfile.height}"
-                                                    </#if>
-                                                           class="form-control required">
+                                                    <form:input id="height" path="height"
+                                                                cssClass="form-control required"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -181,7 +148,7 @@
                                                    class="cancel-edit-button button button button-3d button-rounded btn_3d"
                                                    value="Cancel">
                                         </div>
-                                    </form>
+                                    </form:form>
                                 </div>
                             </div>
                         </div>
@@ -198,32 +165,22 @@
                         </div>
                         <div class="profile_user text-center">
                             <h3 class="user_name_max">
-                            <#if userProfile??>
                                 ${userProfile.name}
-                            </#if>
                             </h3>
                             <p>
-                            <#if userProfile??>
                                 ${userProfile.login}
-                            </#if>
                             </p>
                             <h4>Level
-                            <#if userProfile??>
-                            ${userProfile.lvl}
-                            </#if>
+                                ${userProfile.lvl}
                             </h4>
                             <div class="progress progress-xs">
                                 <div class="progress-bar" role="progressbar"
-                                <#if userProfile??>
                                      aria-valuenow="${userProfile.progress}"
                                      style="width: ${userProfile.progress}%"
-                                </#if>
                                      aria-valuemin="0"
                                      aria-valuemax="100">
                                 <span class="show">
-                                <#if userProfile??>
                                 ${userProfile.xp}/${userProfile.xpToLvlUp}
-                                </#if>
                                 </span>
                                 </div>
                             </div>
@@ -242,24 +199,18 @@
                                         <strong>Flexibility</strong>
                                         <small class="pull-right text-muted">
                                             Level
-                                        <#if userProfile??>
-                                        ${userProfile.flexibilityLvl}
-                                        </#if>
+                                            ${userProfile.flexibilityLvl}
                                         </small>
                                     </p>
                                     <div class="progress progress-xs">
                                         <div class="progress-bar progress-bar-success" role="progressbar"
-                                        <#if userProfile??>
                                              aria-valuenow="${userProfile.flexibilityProgress}"
                                              style="width: ${userProfile.flexibilityProgress}%"
-                                        </#if>
 
                                              aria-valuemin="0"
                                              aria-valuemax="100">
                                             <span class="show">
-                                            <#if userProfile??>
                                             ${userProfile.flexibilityProgress}/100
-                                            </#if>
                                                     </span>
                                         </div>
                                     </div>
@@ -269,25 +220,19 @@
                                         <strong>Stamina</strong>
                                         <small class="pull-right text-muted">
                                             Level
-                                        <#if userProfile??>
-                                        ${userProfile.staminaLvl}
-                                        </#if>
+                                            ${userProfile.staminaLvl}
                                         </small>
                                     </p>
                                     <div class="progress progress-xs">
                                         <div class="progress-bar progress-bar-warning" role="progressbar"
-                                        <#if userProfile??>
                                              aria-valuenow="${userProfile.staminaProgress}"
                                              style="width: ${userProfile.staminaProgress}%"
-                                        </#if>
 
                                              aria-valuemin="0"
                                              aria-valuemax="100">
 
                                             <span class="show">
-                                            <#if userProfile??>
                                             ${userProfile.staminaProgress}/100
-                                            </#if>
                                                 </span>
                                         </div>
                                     </div>
@@ -297,23 +242,17 @@
                                         <strong>Strength</strong>
                                         <small class="pull-right text-muted">
                                             Level
-                                        <#if userProfile??>
-                                        ${userProfile.strengthLvl}
-                                        </#if>
+                                            ${userProfile.strengthLvl}
                                         </small>
                                     </p>
                                     <div class="progress progress-xs">
                                         <div class="progress-bar progress-bar-info" role="progressbar"
-                                        <#if userProfile??>
                                              aria-valuenow="${userProfile.strengthProgress}"
                                              style="width: ${userProfile.strengthProgress}%"
-                                        </#if>
                                              aria-valuemin="0"
                                              aria-valuemax="100">
                                             <span class="show">
-                                            <#if userProfile??>
                                             ${userProfile.strengthProgress}/100
-                                            </#if>
                                                 </span>
                                         </div>
                                     </div>
@@ -338,18 +277,17 @@
                                         <div class="table-responsive">
                                             <table class="table table-responsive">
                                                 <tbody>
-                                                <#if userProfile??>
+                                                <c:forEach items="${userProfile.userTrainings}" var="userTraining">
                                                     <#list userProfile.userTrainings as userTraining>
                                                     <tr>
                                                         <td>
-                                                        ${userTraining.training.name}
+                                                                ${userTraining.training.name}
                                                         </td>
                                                         <td>
-                                                        ${userTraining.date}
+                                                                ${userTraining.date}
                                                         </td>
                                                     </tr>
-                                                    </#list>
-                                                </#if>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -362,6 +300,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 </body>

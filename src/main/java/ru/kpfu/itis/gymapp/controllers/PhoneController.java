@@ -49,12 +49,10 @@ public class PhoneController {
     }
 
     @PostMapping
-    public String editPhone(ModelMap model,
-                            @Valid @ModelAttribute("phoneForm") UserPhoneForm form,
+    public String editPhone(@Valid @ModelAttribute("phoneForm") UserPhoneForm form,
                             BindingResult errors, Authentication auth) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("errors", errors.getAllErrors());
             return "phone";
         } else {
             verificationService.makeVerification(authService.getUserByAuthentication(auth), form.getPhone());

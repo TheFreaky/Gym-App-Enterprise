@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html  lang="ru">
     <head>
@@ -6,6 +7,6 @@
     </head>
     <body>
         <p>Произошла ошибка. Мы уже ее утраняем:)</p>
-        <p><a href="/">Перейти на главную страницу</a></p>
+        <p><a href="<c:url value="/"/>">Перейти на главную страницу</a></p>
     </body>
 </html>

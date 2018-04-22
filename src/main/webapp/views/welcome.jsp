@@ -1,7 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#import "spring.ftl" as spring />
-<#-- @ftlvariable name="userForm" type="ru.kpfu.itis.gymapp.forms.UserRegistrationForm" -->
-<#-- @ftlvariable name="signinErrors" type="java.lang.String" -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +18,7 @@
           type="text/css"/>
 
 
-    <link href="<@spring.url "/css/scrolling-nav.css"/>" rel="stylesheet" type='text/css'>
+    <link href="<c:url value= "/static/css/scrolling-nav.css"/>" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -69,19 +67,6 @@
         }
     </style>
 
-    <script>
-        window.onload = function () {
-
-        <#if signinErrors??>
-            $('#myModal').modal('show');
-        </#if>
-        <#if errors??>
-            $('#myModal').modal('show');
-            $('li > a[href="#signup"]').tab("show");
-        </#if>
-        }
-    </script>
-
 </head>
 
 <body>
@@ -90,7 +75,7 @@
     <div class="container d-flex h-100">
         <div class="row welcome-panel">
             <div class="logo">
-                <a href=""><img src="<@spring.url "/img/logo.png"/>" alt="logo"/></a>
+                <a href=""><img src="<c:url value= "/static/img/logo.png"/>" alt="logo"/></a>
             </div>
             <div class="signin-button">
                 <a class="text-center nav-link js-scroll-trigger">
@@ -123,10 +108,7 @@
                     <div class="tab-content">
                         <div id="signin" class="tab-pane active" role="tabpanel">
                             <div class="inner-form">
-                            <#if signinErrors??>
-                                <div class="text-danger">* ${signinErrors}</div>
-                            </#if>
-                                <form class="sign-form" method="post" action="<@spring.url "/login"/>">
+                                <form class="sign-form" method="post" action="<c:url value= "/login"/>">
                                     <label for="signin-username-field">Email:</label>
                                     <input id="signin-username-field" type="text" name="login">
                                     <label for="signin-password-field">Пароль:</label>
@@ -142,29 +124,17 @@
                         </div>
                         <div id="signup" class="tab-pane" role="tabpanel">
                             <div class="inner-form">
-                            <#if errors??>
-                                <#list errors as error>
-                                    <div class="text-danger">* <@spring.message "${error.code}"/></div>
-                                </#list>
-                            </#if>
-                                <form class="sign-form" method="post" action="<@spring.url "/signup"/>">
-                                    <label for="signup-name">Имя:</label>
-                                    <input id="signup-name" type="text" name="name"
-                                    <#if userForm??>
-                                           value="${userForm.name}"
-                                    </#if>
-                                    >
-                                    <label for="signup-username">Email:</label>
-                                    <input id="signup-username" type="text" name="login"
-                                    <#if userForm??>
-                                           value="${userForm.login}"
-                                    </#if>
-                                    >
-                                    <label for="signup-password">Пароль:</label>
-                                    <input id="signup-password" type="password" name="password">
+                                <form:form method="POST" action="/signup" commandName="userForm" cssClass="sign-form">
+                                    <form:errors path="*" cssClass="text-danger"/><br>
+                                    <form:label path="phone">Имя:</form:label>
+                                    <form:input id="signup-name" path="name"/>
+                                    <form:label path="login">Email:</form:label>
+                                    <form:input id="signup-username" path="login"/>
+                                    <form:label path="password">Пароль:</form:label>
+                                    <form:password id="signup-password" path="password"/>
 
                                     <button type="submit">Зарегистрироваться</button>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                     </div>

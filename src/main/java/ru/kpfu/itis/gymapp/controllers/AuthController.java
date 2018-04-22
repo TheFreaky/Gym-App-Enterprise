@@ -25,6 +25,7 @@ public class AuthController {
         if (authentication != null) {
             return "redirect:/";
         }
+
         if (!Strings.isNullOrEmpty(error)) {
             model.addAttribute("signinErrors", "Wrong email or password");
         }

@@ -1,6 +1,5 @@
-<#ftl encoding='UTF-8'>
-<#-- @ftlvariable name="users" type="java.util.List<ru.kpfu.itis.gymapp.models.User>" -->
-<#import "spring.ftl" as spring />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +24,7 @@
     <link type="text/css"
           href="http://coreplusdemo.lorvent.com/css,_app.css+vendors,_datatables,_css,_dataTables.bootstrap.css+css,_custom.css.pagespeed.cc.cBVNmYlWhB.css"
           rel="stylesheet">
-    <link href="<@spring.url "/css/style.css"/>" type="text/css" rel="stylesheet">
+    <link href="<c:url value= "/static/css/style.css"/>" type="text/css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -64,7 +63,7 @@
 </head>
 <body>
 
-<#include "/header.ftl">
+<jsp:include page="header.jsp"/>
 
 <section class="content">
     <div class="row">
@@ -115,27 +114,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <#if users??>
-                                            <#list users as user>
+                                        <c:forEach items="users" var="user">
                                             <tr role="row">
                                                 <td>${user.name}</td>
                                                 <td>${user.login}</td>
                                                 <td>${user.xp}</td>
                                                 <td>${user.state}</td>
-                                                    <td>${user.phone!'-'}</td>
-                                                <td><a href="<@spring.url "/admin/users/edit/${user.id}"/>"><i
+                                                    <td>${user.phone}</td>
+                                                <td><a href="<c:url value= "/admin/users/edit/${user.id}"/>"><i
                                                         class="fa fa-fw fa-pencil text-primary actions_icon"
                                                         title="Edit User"></i></a>
-                                                    <a href="<@spring.url "/admin/users/delete/${user.id}"/>"><i
+                                                    <a href="<c:url value= "/admin/users/delete/${user.id}"/>"><i
                                                             class="fa fa-fw fa-times text-danger actions_icon"
                                                             title="Delete User"></i>
                                                     </a>
-                                                    <a href="<@spring.url "/admin/users/profile/${user.id}"/>"><i
+                                                    <a href="<c:url value= "/admin/users/profile/${user.id}"/>"><i
                                                             class="fa fa-fw fa-star text-success actions_icon"
                                                             title="View User"></i></a></td>
                                             </tr>
-                                            </#list>
-                                        </#if>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
