@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import ru.kpfu.itis.gymapp.dto.UserProfileDto;
 import ru.kpfu.itis.gymapp.forms.UserProfileForm;
 import ru.kpfu.itis.gymapp.services.AdminService;
 import ru.kpfu.itis.gymapp.validators.UserProfileFormValidator;
@@ -29,6 +28,7 @@ public class AdminController {
     @Autowired
     private UserProfileFormValidator profileFormValidator;
 
+
     @InitBinder("profileForm")
     public void initProfileFormValidator(WebDataBinder binder) {
         binder.addValidators(profileFormValidator);
@@ -42,7 +42,7 @@ public class AdminController {
 
     @GetMapping
     public String getUsersPage(ModelMap model) {
-        model.addAttribute("users",adminService.getUsers());
+        model.addAttribute("users", adminService.getUsers());
         return "users";
     }
 

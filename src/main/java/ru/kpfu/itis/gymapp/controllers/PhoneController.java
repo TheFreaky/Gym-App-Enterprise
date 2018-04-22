@@ -28,9 +28,6 @@ public class PhoneController {
     private SmsVerificationService verificationService;
 
     @Autowired
-    private AuthenticationService authService;
-
-    @Autowired
     private UserPhoneFromValidator validator;
 
     @InitBinder("phoneForm")
@@ -39,9 +36,9 @@ public class PhoneController {
     }
 
     @GetMapping
-    public String getPhonePage(ModelMap model, Authentication auth) {
-        User user = authService.getUserByAuthentication(auth);
-        model.addAttribute("phoneForm", UserPhoneForm.builder()
+    public String getPhonePage(@ModelAttribute("currentUser") User user, ModelMap model, Authentication auth) {
+        model.addAttribute("phoneForm",
+                UserPhoneForm.builder()
                 .phone(user.getPhone())
                 .build()
         );
@@ -49,13 +46,13 @@ public class PhoneController {
     }
 
     @PostMapping
-    public String editPhone(@Valid @ModelAttribute("phoneForm") UserPhoneForm form,
-                            BindingResult errors, Authentication auth) {
+    public String editPhone(@ModelAttribute("currentUser") User user, @Valid @ModelAttribute("phoneForm") UserPhoneForm form,
+                            BindingResult errors) {
 
         if (errors.hasErrors()) {
             return "phone";
         } else {
-            verificationService.makeVerification(authService.getUserByAuthentication(auth), form.getPhone());
+            verificationService.makeVerification(user, form.getPhone());
             return "phoneCode";
         }
     }

@@ -29,9 +29,6 @@ public class ProfileController {
     private UserProfileService userProfileService;
 
     @Autowired
-    private AuthenticationService authService;
-
-    @Autowired
     private UserProfileFormValidator validator;
 
     @InitBinder("profileForm")
@@ -40,17 +37,16 @@ public class ProfileController {
     }
 
     @GetMapping
-    public String getProfilePage(ModelMap model, Authentication auth) {
-        User user = authService.getUserByAuthentication(auth);
+    public String getProfilePage(@ModelAttribute("currentUser") User user, ModelMap model) {
         UserProfileDto userProfile = userProfileService.getUserProfile(user);
         model.addAttribute("userProfile", userProfile);
         return "profile";
     }
 
     @PostMapping
-    public String editProfile(ModelMap model, @Valid @ModelAttribute("profileForm") UserProfileForm form,
-                              BindingResult errors, Authentication auth) {
-        User user = authService.getUserByAuthentication(auth);
+    public String editProfile(@ModelAttribute("currentUser") User user,
+                              ModelMap model, @Valid @ModelAttribute("profileForm") UserProfileForm form,
+                              BindingResult errors) {
         if (errors.hasErrors()) {
             UserProfileDto userProfile = userProfileService.getUserProfile(user);
             model.addAttribute("userProfile", userProfile);

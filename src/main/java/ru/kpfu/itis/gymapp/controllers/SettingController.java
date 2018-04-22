@@ -28,9 +28,6 @@ public class SettingController {
     private UserSettingService userSettingService;
 
     @Autowired
-    private AuthenticationService authService;
-
-    @Autowired
     private UserSettingFormValidator validator;
 
     @InitBinder("settingForm")
@@ -39,8 +36,7 @@ public class SettingController {
     }
 
     @GetMapping
-    public String getSettingPage(ModelMap model, Authentication auth) {
-        User user = authService.getUserByAuthentication(auth);
+    public String getSettingPage(ModelMap model, @ModelAttribute("currentUser") User user) {
         model.addAttribute("setting", UserSettingForm.builder()
                 .login(user.getLogin())
                 .build()
@@ -51,14 +47,15 @@ public class SettingController {
     @PostMapping
     public String editSetting(ModelMap model,
                               @Valid @ModelAttribute("settingForm") UserSettingForm form,
-                              BindingResult errors, Authentication auth) {
+                              @ModelAttribute("currentUser") User user,
+                              BindingResult errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("setting", form);
             model.addAttribute("errors", errors.getAllErrors());
             return "setting";
         } else {
-            userSettingService.editUserData(form, authService.getUserByAuthentication(auth));
+            userSettingService.editUserData(form, user);
             return "redirect:/setting";
         }
     }

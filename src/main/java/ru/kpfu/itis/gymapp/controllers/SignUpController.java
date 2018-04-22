@@ -49,10 +49,8 @@ public class SignUpController {
 
     @PostMapping
     public String signUp(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-                         BindingResult errors, ModelMap model) {
+                         BindingResult errors) {
         if (errors.hasErrors()) {
-            model.addAttribute("user", userForm);
-            model.addAttribute("errors", errors.getAllErrors());
             return "welcome";
         } else {
             User register = registrationService.register(userForm);

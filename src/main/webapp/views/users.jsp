@@ -114,7 +114,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="users" var="user">
+                                        <c:forEach items="${users}" var="user">
                                             <tr role="row">
                                                 <td>${user.name}</td>
                                                 <td>${user.login}</td>
