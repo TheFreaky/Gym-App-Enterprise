@@ -11,7 +11,7 @@
 
     <script src="http://coreplusdemo.lorvent.com/js/app.js.pagespeed.jm.Xs4nyYH02x.js"
             type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
             integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
             crossorigin="anonymous"></script>
@@ -126,7 +126,7 @@
                             <#if signinErrors??>
                                 <div class="text-danger">* ${signinErrors}</div>
                             </#if>
-                                <form class="sign-form" method="post" action="<@spring.url "/login"/>">
+                                <form class="sign-form" method="post" action="<@spring.url "/signin"/>">
                                     <label for="signin-username-field">Email:</label>
                                     <input id="signin-username-field" type="text" name="login">
                                     <label for="signin-password-field">Пароль:</label>
